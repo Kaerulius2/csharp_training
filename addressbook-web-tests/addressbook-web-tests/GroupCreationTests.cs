@@ -14,16 +14,16 @@ namespace addressbook_web_tests
         public void GroupCreationTest()
         {
 
-            OpenHomePage();
-            Login(new AccountData("admin", "secret"));
-            GoToGroupsPage();
-            InitGroupCreation();
+            navigationHelper.OpenHomePage();
+            loginHelper.Login(new AccountData("admin", "secret"));
+            navigationHelper.GoToGroupsPage();
+            groupHelper.InitGroupCreation();
             GroupData group = new GroupData("TestGroup");
             group.Header = "TestHeader";
             group.Footer = "TestFooter";
-            FillGroupForm(group);
-            SubmitGroupCreation();
-            ReturnToGroupsPage();
+            groupHelper.FillGroupForm(group);
+            groupHelper.SubmitGroupCreation();
+            navigationHelper.ReturnToGroupsPage();
 
         }
 
