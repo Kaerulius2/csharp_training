@@ -17,7 +17,8 @@ namespace addressbook_web_tests
 
         public NavigationHelper(ApplicationManager manager, string baseURL) : base(manager)
         {
-             this.baseURL = baseURL;
+            driver = manager.Driver;
+            this.baseURL = baseURL;
         }
 
         public void OpenHomePage()
