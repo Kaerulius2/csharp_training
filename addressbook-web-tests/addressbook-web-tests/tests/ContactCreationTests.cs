@@ -14,17 +14,14 @@ namespace addressbook_web_tests
         [Test]
         public void TheUserCreationsTestsTest()
         {
-            app.Navigator.OpenHomePage();
-            app.Auth.Login(new AccountData("admin", "secret"));
-            app.Contacts.OpenNewContactForm();
-            ContactData contact = new ContactData("Alex","Ivanoff");
+            ContactData contact = new ContactData("Alex", "Ivanoff");
             contact.Middlename = "Ivanovitch";
             contact.Address = "100111 Russia, Moscow, Tvetskaya str 123-54";
             contact.Email = "alexxx@mail.com";
-            contact.Homephone = "+79260001122";
-            app.Contacts.FillNewContactForm(contact);
-            app.Contacts.SubmitContactForm();
-            app.Navigator.ReturnToHomepage();
+            contact.Homephone = "+79260001122"; 
+
+            app.Contacts.Create(contact);
+            
         }
 
         

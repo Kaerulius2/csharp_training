@@ -12,9 +12,9 @@ namespace addressbook_web_tests
 {
     public class ContactHelper : HelperBase
     {
-        public ContactHelper(IWebDriver driver) : base(driver)
+        public ContactHelper(ApplicationManager manager) : base(manager)
         {
-            this.driver = driver;
+            
         }
 
         public void SubmitContactForm()
@@ -42,6 +42,14 @@ namespace addressbook_web_tests
             driver.FindElement(By.Name("email")).Clear();
             driver.FindElement(By.Name("email")).SendKeys(contact.Email);
 
+        }
+
+        internal void Create(ContactData contact)
+        {
+            OpenNewContactForm();
+            FillNewContactForm(contact);
+            SubmitContactForm();
+            manager.Navigator.ReturnToHomepage();
         }
 
         public void OpenNewContactForm()
