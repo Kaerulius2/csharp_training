@@ -10,7 +10,13 @@ namespace addressbook_web_tests
     [TestFixture]
     public class ContactDeletionTests : AuthTestBase
     {
-        
+
+        [SetUp]
+        public void TestPresentAnyContacts()
+        {
+            CreateContactIfNothing();
+        }
+
         [Test]
         public void TheUserDelertionTest()
         {

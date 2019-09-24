@@ -10,7 +10,12 @@ namespace addressbook_web_tests
     [TestFixture]
     public class ContactModificationTests : AuthTestBase
     {
-        
+        [SetUp]
+        public void TestPresentAnyContacts()
+        {
+            CreateContactIfNothing();
+        }
+
         [Test]
         public void UserModificationTest()
         {

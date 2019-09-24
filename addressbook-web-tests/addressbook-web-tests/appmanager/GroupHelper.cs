@@ -20,15 +20,7 @@ namespace addressbook_web_tests
 
         public GroupHelper Remove(int v)
         {
-            manager.Navigator.GoToGroupsPage();
-            if (!IsElementPresent(By.XPath("//span[@class='group']")))
-            {
-                GroupData group = new GroupData("NewTestGroup");
-                group.Header = "NewTestHeader";
-                group.Footer = "NewTestFooter";
-                Create(group);
-            }
-                         
+                manager.Navigator.GoToGroupsPage();
                 SelectGroup(v);
                 DeleteGroup();
                 ReturnToGroupsPage();
@@ -36,16 +28,23 @@ namespace addressbook_web_tests
             return this;
         }
 
+        internal List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigator.GoToGroupsPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+
+            foreach(IWebElement element in elements)
+            {
+                //element.Text
+            }
+
+            return groups;
+        }
+
         public GroupHelper Modify(int v, GroupData newGroup)
         {
             manager.Navigator.GoToGroupsPage();
-            if (!IsElementPresent(By.XPath("//span[@class='group']")))
-            {
-                GroupData group = new GroupData("NewTestGroup");
-                group.Header = "NewTestHeader";
-                group.Footer = "NewTestFooter";
-                Create(group);
-            }
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newGroup);

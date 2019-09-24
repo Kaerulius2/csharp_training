@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenQA.Selenium;
 using NUnit.Framework;
 
 namespace addressbook_web_tests
@@ -10,6 +11,12 @@ namespace addressbook_web_tests
     [TestFixture]
     public class GroupModificationTests : AuthTestBase
     {
+        [SetUp]
+        public void TestPresentAnyGroups()
+        {
+            CreateGroupIfNothing();
+        }
+
         [Test]
         public void GroupModificationTest()
         {
