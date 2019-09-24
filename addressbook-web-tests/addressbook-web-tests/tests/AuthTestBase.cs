@@ -4,21 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using OpenQA.Selenium;
 
 namespace addressbook_web_tests
 {
-    public class TestBase
+    public class AuthTestBase : TestBase
     {
-
-        protected ApplicationManager app;
-
         [SetUp]
-        public void SetupApplicationMAnager()
+        public void SetUpLogin()
         {
-            app = ApplicationManager.GetInstance();
-            
+            app.Auth.Login(new AccountData("admin", "secret"));
         }
-
     }
 }

@@ -20,6 +20,17 @@ namespace addressbook_web_tests
         public ContactHelper Delete(int v)
         {
             manager.Navigator.ReturnToHomepage();
+            if (!IsElementPresent(By.XPath("//img[@title='Edit']")))
+            {
+                ContactData contact = new ContactData("Alex", "Ivanoff");
+                contact.Middlename = "Ivanovitch";
+                contact.Address = "100111 Russia, Moscow, Tvetskaya str 123-54";
+                contact.Email = "alexxx@mail.com";
+                contact.Homephone = "+79260001122";
+
+                Create(contact);
+            }
+                
             SelectContact(v);
             DeleteContact();
             CloseAlert();
@@ -30,6 +41,16 @@ namespace addressbook_web_tests
         public ContactHelper Modify(int v, ContactData contactNew)
         {
             manager.Navigator.ReturnToHomepage();
+            if (!IsElementPresent(By.XPath("//img[@title='Edit']")))
+            {
+                ContactData contact = new ContactData("Alex", "Ivanoff");
+                contact.Middlename = "Ivanovitch";
+                contact.Address = "100111 Russia, Moscow, Tvetskaya str 123-54";
+                contact.Email = "alexxx@mail.com";
+                contact.Homephone = "+79260001122";
+
+                Create(contact);
+            }
             InitContactModification(v);
             FillNewContactForm(contactNew);
             SubmitContactModify();
@@ -75,25 +96,17 @@ namespace addressbook_web_tests
 
         public ContactHelper FillNewContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-            driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys(contact.Middlename);
-            driver.FindElement(By.Name("lastname")).Click();
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
-            driver.FindElement(By.Name("address")).Click();
-            driver.FindElement(By.Name("address")).Clear();
-            driver.FindElement(By.Name("address")).SendKeys(contact.Address);
-            driver.FindElement(By.Name("home")).Click();
-            driver.FindElement(By.Name("home")).Clear();
-            driver.FindElement(By.Name("home")).SendKeys(contact.Homephone);
-            driver.FindElement(By.Name("email")).Click();
-            driver.FindElement(By.Name("email")).Clear();
-            driver.FindElement(By.Name("email")).SendKeys(contact.Email);
+            Type(By.Name("firstname"), contact.Firstname);
+            Type(By.Name("middlename"), contact.Middlename);
+            Type(By.Name("lastname"), contact.Lastname);
+            Type(By.Name("address"), contact.Address);
+            Type(By.Name("home"), contact.Homephone);
+            Type(By.Name("email"), contact.Email);
+                        
             return this;
         }
+
+        
 
         internal ContactHelper Create(ContactData contact)
         {
