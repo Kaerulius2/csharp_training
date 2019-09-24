@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,9 +38,26 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.ReturnToHomepage();
+
+            ICollection<IWebElement> entries = driver.FindElements(By.XPath("//tr[@name='entry']"));
+            
+            foreach (IWebElement el in entries)
+            {
+                IList<IWebElement> cells = el.FindElements(By.TagName("td"));
+                ContactData con = new ContactData(cells[2].Text, cells[1].Text);
+                contacts.Add(con);
+            }
+
+            return contacts;
+        }
+
         private ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath("(//img[@title='Edit'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//img[@title='Edit'])[" + (index+1) + "]")).Click();
             return this;
         }
 
@@ -69,7 +87,7 @@ namespace addressbook_web_tests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 

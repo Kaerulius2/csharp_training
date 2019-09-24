@@ -15,28 +15,58 @@ namespace addressbook_web_tests
         [Test]
         public void GroupCreationTest()
         {
-            GroupData group = new GroupData("TestGroup");
-            group.Header = "TestHeader";
-            group.Footer = "TestFooter";
+            GroupData group = new GroupData("TestGroup2");
+            group.Header = "TestHeader2";
+            group.Footer = "TestFooter2";
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
             app.Groups.Create(group);
 
+            oldGroups.Add(group);
             List<GroupData> newGroups = app.Groups.GetGroupList();
-            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
 
         }
+        /*
+                [Test]
+                public void BadNameGroupCreationTest()
+                {
+                    GroupData group = new GroupData("a'a");
+                    group.Header = "TestHeader";
+                    group.Footer = "TestFooter";
 
+                    List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+                    app.Groups.Create(group);
+
+                    oldGroups.Add(group);
+                    List<GroupData> newGroups = app.Groups.GetGroupList();
+                    oldGroups.Sort();
+                    newGroups.Sort();
+                    Assert.AreEqual(oldGroups, newGroups);
+
+                }
+                */
         [Test]
         public void EmptyGroupCreationTest()
         {
             GroupData group = new GroupData("TestGroup");
             group.Header = "";
             group.Footer = "";
-                        
+
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
             app.Groups.Create(group);
 
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+            
         }
 
 

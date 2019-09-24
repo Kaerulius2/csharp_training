@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -25,9 +26,23 @@ namespace addressbook_web_tests
             contactNew.Email = "boriss@mail.com";
             contactNew.Homephone = "+79260003344";
 
-            app.Contacts.Modify(1, contactNew);
-            
-            
+            List<ContactData> oldCont = app.Contacts.GetContactList();
+
+            app.Contacts.Modify(0, contactNew);
+
+            oldCont[0].Firstname = contactNew.Firstname;
+            oldCont[0].Lastname = contactNew.Lastname;
+            oldCont[0].Middlename = contactNew.Middlename;
+            oldCont[0].Address = contactNew.Address;
+            oldCont[0].Email = contactNew.Email;
+            oldCont[0].Homephone = contactNew.Homephone;
+
+            List <ContactData> newCont = app.Contacts.GetContactList();
+
+            oldCont.Sort();
+            newCont.Sort();
+
+            Assert.AreEqual(oldCont, newCont);
         }
 
         

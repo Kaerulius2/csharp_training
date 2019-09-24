@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
-
+using System.Collections.Generic;
 
 namespace addressbook_web_tests
 {
@@ -20,8 +20,17 @@ namespace addressbook_web_tests
         [Test]
         public void TheUserDelertionTest()
         {
-            app.Contacts.Delete(1);
-            
+            List<ContactData> oldCont = app.Contacts.GetContactList();
+
+            app.Contacts.Delete(0);
+
+            oldCont.RemoveAt(0);
+            List<ContactData> newCont = app.Contacts.GetContactList();
+
+            oldCont.Sort();
+            newCont.Sort();
+
+            Assert.AreEqual(oldCont, newCont);
         }
 
         
