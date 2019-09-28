@@ -30,6 +30,8 @@ namespace addressbook_web_tests
 
             app.Contacts.Modify(0, contactNew);
 
+            Assert.AreEqual(oldCont.Count, app.Contacts.GetContactCount());
+
             oldCont[0].Firstname = contactNew.Firstname;
             oldCont[0].Lastname = contactNew.Lastname;
             oldCont[0].Middlename = contactNew.Middlename;

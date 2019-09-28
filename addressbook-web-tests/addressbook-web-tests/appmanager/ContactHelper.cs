@@ -38,21 +38,31 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.XPath("//tr[@name='entry']")).Count;
+        }
+
+        private List<ContactData> contCache = null;
+
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.ReturnToHomepage();
-
-            ICollection<IWebElement> entries = driver.FindElements(By.XPath("//tr[@name='entry']"));
-            
-            foreach (IWebElement el in entries)
+            if (contCache == null)
             {
-                IList<IWebElement> cells = el.FindElements(By.TagName("td"));
-                ContactData con = new ContactData(cells[2].Text, cells[1].Text);
-                contacts.Add(con);
-            }
+                contCache = new List<ContactData>();
+                manager.Navigator.ReturnToHomepage();
 
-            return contacts;
+                ICollection<IWebElement> entries = driver.FindElements(By.XPath("//tr[@name='entry']"));
+
+                foreach (IWebElement el in entries)
+                {
+                    IList<IWebElement> cells = el.FindElements(By.TagName("td"));
+                    ContactData con = new ContactData(cells[2].Text, cells[1].Text);
+                    contCache.Add(con);
+                }
+            }
+                       
+            return new List<ContactData>(contCache);
         }
 
         private ContactHelper InitContactModification(int index)
@@ -64,6 +74,7 @@ namespace addressbook_web_tests
         private ContactHelper SubmitContactModify()
         {
             driver.FindElement(By.XPath("//input[@value='Update']")).Click();
+            contCache = null;
             return this;
         }
 
@@ -76,12 +87,14 @@ namespace addressbook_web_tests
         private ContactHelper DeleteContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            contCache = null;
             return this;
         }
 
         public ContactHelper SubmitContactForm()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            contCache = null;
             return this;
         }
 

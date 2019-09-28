@@ -24,6 +24,9 @@ namespace addressbook_web_tests
             List<ContactData> oldCont = app.Contacts.GetContactList();
 
             app.Contacts.Create(contact);
+
+            Assert.AreEqual(oldCont.Count + 1, app.Contacts.GetContactCount());
+
             oldCont.Add(contact);
             List<ContactData> newCont = app.Contacts.GetContactList();
 

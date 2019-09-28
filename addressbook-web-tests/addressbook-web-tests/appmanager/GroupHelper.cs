@@ -28,19 +28,24 @@ namespace addressbook_web_tests
             return this;
         }
 
+        private List<GroupData> groupCache = null;
         public List<GroupData> GetGroupList()
         {
-            List<GroupData> groups = new List<GroupData>();
-            manager.Navigator.GoToGroupsPage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-
-            foreach(IWebElement element in elements)
+            if(groupCache==null)
             {
-                GroupData group = new GroupData(element.Text);
-                groups.Add(group);
-            }
+                groupCache = new List<GroupData>();
+                manager.Navigator.GoToGroupsPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
 
-            return groups;
+                foreach (IWebElement element in elements)
+                {
+                    GroupData group = new GroupData(element.Text);
+                    groupCache.Add(group);
+                }
+
+            }
+               
+            return new List<GroupData>(groupCache);
         }
 
         public GroupHelper Modify(int v, GroupData newGroup)
@@ -57,6 +62,7 @@ namespace addressbook_web_tests
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            groupCache = null;
             return this;
         }
 
@@ -76,15 +82,22 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public int GetGroupCount()
+        {
+            return driver.FindElements(By.CssSelector("span.group")).Count;
+        }
+
         public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            groupCache = null;
             return this;
         }
 
         public GroupHelper DeleteGroup()
         {
             driver.FindElement(By.Name("delete")).Click();
+            groupCache = null;
             return this;
         }
 

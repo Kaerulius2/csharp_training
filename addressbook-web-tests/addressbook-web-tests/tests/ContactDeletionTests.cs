@@ -24,7 +24,10 @@ namespace addressbook_web_tests
 
             app.Contacts.Delete(0);
 
+            Assert.AreEqual(oldCont.Count - 1, app.Contacts.GetContactCount());
+
             oldCont.RemoveAt(0);
+
             List<ContactData> newCont = app.Contacts.GetContactList();
 
             oldCont.Sort();

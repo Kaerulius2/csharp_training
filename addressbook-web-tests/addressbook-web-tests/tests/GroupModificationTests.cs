@@ -28,6 +28,8 @@ namespace addressbook_web_tests
 
             app.Groups.Modify(0, newGroup);
 
+            Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
+
             oldGroups[0].Name = newGroup.Name;
             oldGroups[0].Header = newGroup.Header;
             oldGroups[0].Footer = newGroup.Footer;
