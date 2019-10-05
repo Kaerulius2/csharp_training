@@ -59,6 +59,14 @@ namespace addressbook_web_tests
 
         }
 
+        public string GetInformationFromProp(int index)
+        {
+            manager.Navigator.OpenHomePage();
+            OpenContactProperty(index);
+            string text = driver.FindElement(By.Id("content")).GetAttribute("innerText");
+            return text.Trim();
+        }
+
         public ContactData GetInformationFromTable(int index)
         {
             manager.Navigator.OpenHomePage();
@@ -126,6 +134,12 @@ namespace addressbook_web_tests
             }
                        
             return new List<ContactData>(contCache);
+        }
+
+        public ContactHelper OpenContactProperty(int index)
+        {
+            driver.FindElement(By.XPath("(//img[@title='Details'])[" + (index + 1) + "]")).Click();
+            return this;
         }
 
         private ContactHelper InitContactModification(int index)

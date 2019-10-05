@@ -10,6 +10,7 @@ namespace addressbook_web_tests
     {
         private string allPhones;
         private string allEmails;
+        private string allData;
 
         public ContactData(string firstname, string lastname)
         {
@@ -65,6 +66,25 @@ namespace addressbook_web_tests
             return str.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
         }
 
+        public string AllData
+        {
+            get
+            {
+                if(allData != null)
+                {
+                    return allData;
+                }
+
+                string txt = String.Format("{0} {1} {2}\r\n{3}\r\n\r\nH: {4}\r\nM: {5}\r\nW: {6}\r\n\r\n{7}\r\n{8}\r\n{9}", 
+                    Firstname, Middlename, Lastname, Address, Homephone, Mobilephone, Workphone, Email, Email2, Email3);
+                return txt;
+            }
+            set
+            {
+                allData = value;
+            }
+        }
+
         public string AllEmails {
             get
             {
@@ -73,7 +93,8 @@ namespace addressbook_web_tests
                     return allEmails;
                 }
 
-                return (CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
+                return String.Format("{0}\r\n{1}\r\n{2}", Email, Email2, Email3).Trim();
+                    
             }
             set
             {
