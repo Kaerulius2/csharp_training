@@ -59,6 +59,15 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public GroupData FillGroupData(string name, string header, string footer)
+        {
+            GroupData group = new GroupData(name);
+            group.Header = header;
+            group.Footer = footer;
+
+            return group;
+        }
+
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();

@@ -20,9 +20,7 @@ namespace addressbook_web_tests
         [Test]
         public void GroupModificationTest()
         {
-            GroupData newGroup = new GroupData("TestGroupNew");
-            newGroup.Header = "TestHeaderNew";
-            newGroup.Footer = "TestFooterNew";
+            GroupData newGroup = app.Groups.FillGroupData("TestGroupNew", "TestHeaderNew", "TestFooterNew");
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 

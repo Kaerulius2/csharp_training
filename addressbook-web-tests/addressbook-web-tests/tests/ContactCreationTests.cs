@@ -15,11 +15,7 @@ namespace addressbook_web_tests
         [Test]
         public void TheUserCreationsTestsTest()
         {
-            ContactData contact = new ContactData("Alex", "Ivanoff");
-            contact.Middlename = "Ivanovitch";
-            contact.Address = "100111 Russia, Moscow, Tvetskaya str 123-54";
-            contact.Email = "alexxx@mail.com";
-            contact.Homephone = "+79260001122";
+            ContactData contact = app.Contacts.FillContactForm("Alex", "Ivanoff", "Ivanovitch", "100111 Russia, MSK, Tverskaya str 61-2", "alex@mail.com", "+79260005544");
 
             List<ContactData> oldCont = app.Contacts.GetContactList();
 

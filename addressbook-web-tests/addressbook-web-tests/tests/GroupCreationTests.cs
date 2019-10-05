@@ -15,10 +15,8 @@ namespace addressbook_web_tests
         [Test]
         public void GroupCreationTest()
         {
-            GroupData group = new GroupData("TestGroup2");
-            group.Header = "TestHeader2";
-            group.Footer = "TestFooter2";
-
+            GroupData group = app.Groups.FillGroupData("TestGroup","TestHeader","TestFooter");
+                
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
             app.Groups.Create(group);
@@ -32,28 +30,31 @@ namespace addressbook_web_tests
             Assert.AreEqual(oldGroups, newGroups);
 
         }
+
+        
+
         /*
-                [Test]
-                public void BadNameGroupCreationTest()
-                {
-                    GroupData group = new GroupData("a'a");
-                    group.Header = "TestHeader";
-                    group.Footer = "TestFooter";
+       [Test]
+       public void BadNameGroupCreationTest()
+       {
+           GroupData group = new GroupData("a'a");
+           group.Header = "TestHeader";
+           group.Footer = "TestFooter";
 
-                    List<GroupData> oldGroups = app.Groups.GetGroupList();
+           List<GroupData> oldGroups = app.Groups.GetGroupList();
 
-                    app.Groups.Create(group);
+           app.Groups.Create(group);
 
-            Assert.AreEqual(oldGroups.Count+1, app.Groups.GetGroupCount());
+   Assert.AreEqual(oldGroups.Count+1, app.Groups.GetGroupCount());
 
-                    oldGroups.Add(group);
-                    List<GroupData> newGroups = app.Groups.GetGroupList();
-                    oldGroups.Sort();
-                    newGroups.Sort();
-                    Assert.AreEqual(oldGroups, newGroups);
+           oldGroups.Add(group);
+           List<GroupData> newGroups = app.Groups.GetGroupList();
+           oldGroups.Sort();
+           newGroups.Sort();
+           Assert.AreEqual(oldGroups, newGroups);
 
-                }
-                */
+       }
+       */
         [Test]
         public void EmptyGroupCreationTest()
         {

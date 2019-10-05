@@ -38,6 +38,17 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public ContactData FillContactForm(string firstname, string lastname, string midname, string address, string email, string homephone)
+        {
+            ContactData contactNew = new ContactData(firstname, lastname);
+            contactNew.Middlename = midname;
+            contactNew.Address = address;
+            contactNew.Email = email;
+            contactNew.Homephone = homephone;
+
+            return contactNew;
+        }
+
         public int GetContactCount()
         {
             return driver.FindElements(By.XPath("//tr[@name='entry']")).Count;

@@ -20,11 +20,8 @@ namespace addressbook_web_tests
         [Test]
         public void UserModificationTest()
         {
-            ContactData contactNew = new ContactData("Boris", "Petroff");
-            contactNew.Middlename = "Kirillovitch";
-            contactNew.Address = "100111 Russia, SPb, Nevskiy str 6-32";
-            contactNew.Email = "boriss@mail.com";
-            contactNew.Homephone = "+79260003344";
+            ContactData contactNew = app.Contacts.FillContactForm("Boris", "Petroff", "Kirillovitch", "100111 Russia, SPb, Nevskiy str 6-32", "boriss@mail.com", "+79260003344");
+                
 
             List<ContactData> oldCont = app.Contacts.GetContactList();
 
@@ -47,9 +44,6 @@ namespace addressbook_web_tests
             Assert.AreEqual(oldCont, newCont);
         }
 
-        
-
-        
         
     }
 }
