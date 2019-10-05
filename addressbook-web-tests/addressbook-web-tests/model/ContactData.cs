@@ -8,87 +8,80 @@ namespace addressbook_web_tests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstname;
-        private string lastname;
-        private string middlename = "";
-        private string address = "";
-        private string homephone = "";
-        private string email = "";
+        private string allPhones;
+        private string allEmails;
 
         public ContactData(string firstname, string lastname)
         {
-            this.firstname = firstname;
-            this.lastname = lastname;
+            Firstname = firstname;
+            Lastname = lastname;
         }
 
-        public string Firstname
-        {
+        public string Firstname {get; set;}
+
+        public string Lastname {get; set;}
+
+
+        public string Middlename {get; set;}
+        
+        public string Address {get; set;}
+
+        public string Homephone {get; set;}
+
+        public string Mobilephone { get; set; }
+
+        public string Workphone { get; set; }
+
+        public string Email { get; set; }
+        public string Email2 { get; set; }
+        public string Email3 { get; set; }
+
+        public string AllPhones {
             get
             {
-                return firstname;
+                if(allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(Homephone) + CleanUp(Mobilephone) + CleanUp(Workphone)).Trim();
+                }
             }
             set
             {
-                firstname = value;
-            }
-        }
-        public string Lastname
-        {
-            get
-            {
-                return lastname;
-            }
-            set
-            {
-                lastname = value;
-            }
+                allPhones = value;
+            } 
+        
         }
 
-        public string Middlename
+        public string CleanUp(string str)
         {
-            get
+            if (str == null || str == "")
             {
-                return middlename;
+                return "";
             }
-            set
-            {
-                middlename = value;
-            }
-        }
-        public string Address
-        {
-            get
-            {
-                return address;
-            }
-            set
-            {
-                address = value;
-            }
-        }
-        public string Homephone
-        {
-            get
-            {
-                return homephone;
-            }
-            set
-            {
-                homephone = value;
-            }
-        }
-        public string Email
-        {
-            get
-            {
-                return email;
-            }
-            set
-            {
-                email = value;
-            }
+
+            return str.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
         }
 
+        public string AllEmails {
+            get
+            {
+                if(allEmails != null)
+                {
+                    return allEmails;
+                }
+
+                return (CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
+            }
+            set
+            {
+                allEmails = value;
+            } 
+        
+        }
+            
         public int CompareTo(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))
@@ -116,12 +109,12 @@ namespace addressbook_web_tests
                 return true;
             }
 
-            return (firstname == other.firstname) && (lastname == other.lastname);
+            return (Firstname == other.Firstname) && (Lastname == other.Lastname);
 
         }
         public override int GetHashCode()
         {
-            return firstname.GetHashCode() + lastname.GetHashCode();
+            return Firstname.GetHashCode() + Lastname.GetHashCode();
         }
         public override string ToString()
         {
