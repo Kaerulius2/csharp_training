@@ -139,7 +139,7 @@ namespace addressbook_web_tests
         }
         public override string ToString()
         {
-            return "LastName=" + Lastname + " FirstName=" + Firstname;
+            return "LastName=" + Lastname + "\nFirstName=" + Firstname;
         }
     }
     

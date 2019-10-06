@@ -11,11 +11,32 @@ namespace addressbook_web_tests
     [TestFixture]
     public class ContactCreationsTests : AuthTestBase
     {
-        
-        [Test]
-        public void TheUserCreationsTestsTest()
+
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            ContactData contact = app.Contacts.FillContactForm("Alex", "Ivanoff", "Ivanovitch", "100111 Russia, MSK, Tverskaya str 61-2", "alex@mail.com", "+79260005544");
+            List<ContactData> cont = new List<ContactData>();
+
+            for (int i = 0; i < 5; i++)
+            {
+                cont.Add(new ContactData(GenerateRandomString(15), GenerateRandomString(20))
+                {
+                    Address = GenerateRandomString(150),
+                    Homephone = GenerateRandomString(10),
+                    Workphone = GenerateRandomString(10),
+                    Mobilephone = GenerateRandomString(10),
+                    Email = GenerateRandomString(50),
+                    Email2 = GenerateRandomString(50),
+                    Email3 = GenerateRandomString(50)
+                });
+            }
+
+            return cont;
+        }
+
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void TheUserCreationsTestsTest(ContactData contact)
+        {
+            //ContactData contact = app.Contacts.FillContactForm("Alex", "Ivanoff", "Ivanovitch", "100111 Russia, MSK, Tverskaya str 61-2", "alex@mail.com", "+79260005544");
 
             List<ContactData> oldCont = app.Contacts.GetContactList();
 
