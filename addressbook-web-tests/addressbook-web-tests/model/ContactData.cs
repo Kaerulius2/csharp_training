@@ -64,7 +64,8 @@ namespace addressbook_web_tests
                 return "";
             }
 
-            return Regex.Replace(str, " -()", "") + "\r\n";
+            //return Regex.Replace(str, " -()", "") + "\r\n";
+            return str.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
         }
 
         public string AllData

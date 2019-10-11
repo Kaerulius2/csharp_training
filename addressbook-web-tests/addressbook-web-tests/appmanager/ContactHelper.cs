@@ -45,7 +45,7 @@ namespace addressbook_web_tests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
-            return new ContactData(firstname, lastname)
+            return new ContactData(firstname.Trim(), lastname.Trim())
             {
                 Middlename = middlename,
                 Address = address,
