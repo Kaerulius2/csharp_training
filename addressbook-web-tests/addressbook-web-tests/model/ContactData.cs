@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace addressbook_web_tests
@@ -63,7 +64,7 @@ namespace addressbook_web_tests
                 return "";
             }
 
-            return str.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return Regex.Replace(str, " -()", "") + "\r\n";
         }
 
         public string AllData
@@ -75,14 +76,85 @@ namespace addressbook_web_tests
                     return allData;
                 }
 
-                string txt = String.Format("{0} {1} {2}\r\n{3}\r\n\r\nH: {4}\r\nM: {5}\r\nW: {6}\r\n\r\n{7}\r\n{8}\r\n{9}", 
-                    Firstname, Middlename, Lastname, Address, Homephone, Mobilephone, Workphone, Email, Email2, Email3);
+                string fio = (IsData(Firstname) + IsData(Middlename) + IsData(Lastname)).Trim() + "\r\n";
+
+                string addr = "";
+
+                if (IsData(Address) != "")
+                {
+                    addr = IsData(Address).Trim() + "\r\n\r\n";
+                }
+                else
+                {
+                    addr = "\r\n";
+                }
+                
+
+                string hph = "";
+                string mph = "";
+                string wph = "";
+
+                if (IsData(Homephone) != "")
+                {
+                    hph = "H: " + IsData(Homephone).Trim() + "\r\n";
+                }
+                else
+                {
+                    hph = "";
+                }
+
+                if (IsData(Mobilephone) != "")
+                {
+                     mph = "M: " + IsData(Mobilephone).Trim() + "\r\n";
+                }
+                else
+                {
+                     mph = "";
+                }
+
+                if (IsData(Workphone) != "")
+                {
+                     wph = "W: " + IsData(Workphone).Trim() + "\r\n";
+                }
+                else
+                {
+                     wph = "";
+                }
+                               
+                string phones = hph + mph + wph + "\r\n";
+                if(phones == "\r\n")
+                {
+                    phones = "";
+                }
+
+
+                string em = (IsEmail(Email) + IsEmail(Email2) + IsEmail(Email3)).Trim();
+
+                string txt = (fio + addr + phones + em).Trim();
                 return txt;
             }
             set
             {
                 allData = value;
             }
+        }
+
+        public string IsData(string data)
+        {
+            if(data==null || data=="")
+            {
+                return "";
+            }
+            return data.Trim() + " ";
+        }
+
+        public string IsEmail(string email)
+        {
+            if(email==null || email=="")
+            {
+                return "";
+            }
+            return email.Trim() + "\r\n";
         }
 
         public string AllEmails {
@@ -93,7 +165,7 @@ namespace addressbook_web_tests
                     return allEmails;
                 }
 
-                return String.Format("{0}\r\n{1}\r\n{2}", Email, Email2, Email3).Trim();
+                return String.Format("{0}{1}{2}", IsEmail(Email), IsEmail(Email2), IsEmail(Email3)).Trim();
                     
             }
             set
