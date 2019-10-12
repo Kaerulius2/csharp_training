@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 
@@ -33,7 +36,18 @@ namespace addressbook_web_tests
             return cont;
         }
 
-        [Test, TestCaseSource("RandomContactDataProvider")]
+        public static IEnumerable<ContactData> ContactDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText(@"contacts.json"));
+        }
+
+        public static IEnumerable<ContactData> ContactDataFromXmlFile()
+        {
+            return (List<ContactData>)
+               new XmlSerializer(typeof(List<ContactData>)).Deserialize(new StreamReader(@"contacts.xml"));
+        }
+
+        [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void TheUserCreationsTestsTest(ContactData contact)
         {
             //ContactData contact = app.Contacts.FillContactForm("Alex", "Ivanoff", "Ivanovitch", "100111 Russia, MSK, Tverskaya str 61-2", "alex@mail.com", "+79260005544");
