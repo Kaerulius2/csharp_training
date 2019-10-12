@@ -12,7 +12,10 @@ namespace addressbook_web_tests
         private string header = "";
         private string footer = "";
 
-        public GroupData(string name)
+        public GroupData()
+        {
+        }
+            public GroupData(string name)
         {
             this.name = name;
         }
