@@ -9,6 +9,7 @@ using OpenQA.Selenium;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using System.Linq;
 
 
 namespace addressbook_web_tests
@@ -85,29 +86,22 @@ namespace addressbook_web_tests
         }
 
         
-
-        /*
        [Test]
-       public void BadNameGroupCreationTest()
+       public void TestDbConnect()
        {
-           GroupData group = new GroupData("a'a");
-           group.Header = "TestHeader";
-           group.Footer = "TestFooter";
+            DateTime start = DateTime.Now;
+            List<GroupData> fromUi=app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
 
-           List<GroupData> oldGroups = app.Groups.GetGroupList();
+            Console.WriteLine(end.Subtract(start));
 
-           app.Groups.Create(group);
+            start = DateTime.Now;
+            List<GroupData> fromDb = GroupData.GetAll();
+            end = DateTime.Now;
 
-   Assert.AreEqual(oldGroups.Count+1, app.Groups.GetGroupCount());
-
-           oldGroups.Add(group);
-           List<GroupData> newGroups = app.Groups.GetGroupList();
-           oldGroups.Sort();
-           newGroups.Sort();
-           Assert.AreEqual(oldGroups, newGroups);
-
-       }
-       */
+            Console.WriteLine(end.Subtract(start));
+        }
+       
         
         
 

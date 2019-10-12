@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LinqToDB;
+using LinqToDB.Mapping;
 
 namespace addressbook_web_tests
 {
+    [Table(Name = "group_list")]
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
         private string name;
@@ -20,6 +23,7 @@ namespace addressbook_web_tests
             this.name = name;
         }
         
+        [Column(Name="group_name")]
         public string Name
         {
             get
@@ -31,6 +35,7 @@ namespace addressbook_web_tests
                 name = value;
             }
         }
+        [Column(Name = "group_header")]
         public string Header
         {
             get
@@ -42,6 +47,7 @@ namespace addressbook_web_tests
                 header = value;
             }
         }
+        [Column(Name = "group_footer")]
         public string Footer
         {
             get
@@ -53,6 +59,8 @@ namespace addressbook_web_tests
                 footer = value;
             }
         }
+        [Column(Name = "group_id"), PrimaryKey, Identity]
+        public string Id { get; set; }
 
         public int CompareTo(GroupData other)
         {
@@ -64,6 +72,8 @@ namespace addressbook_web_tests
             return Name.CompareTo(other.Name);
 
         }
+
+
 
         public bool Equals(GroupData other)
         {
@@ -87,6 +97,14 @@ namespace addressbook_web_tests
         public override string ToString()
         {
             return "name=" + Name + "\nheader="+ header+ "\nfooter=" + footer;
+        }
+
+        public static List<GroupData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Groups select g).ToList();
+            }
         }
 
     }
