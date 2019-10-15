@@ -15,7 +15,7 @@ using System.Linq;
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {   
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -69,16 +69,15 @@ namespace addressbook_web_tests
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
-            //GroupData group = app.Groups.FillGroupData("TestGroup","TestHeader","TestFooter");
-                
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
 
             Assert.AreEqual(oldGroups.Count+1, app.Groups.GetGroupCount());
 
             oldGroups.Add(group);
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
@@ -100,13 +99,28 @@ namespace addressbook_web_tests
             end = DateTime.Now;
 
             Console.WriteLine(end.Subtract(start));
+
+            
         }
-       
-        
-        
+
+        [Test]
+        public void TestDbRelation()
+        {
+            List<GroupData> fromDb = GroupData.GetAll();
+
+            List<ContactData> grCont = fromDb[0].GetContacts();
+            foreach (ContactData contact in grCont)
+            {
+                Console.WriteLine(contact);
+            }
+            
+        }
 
 
 
 
-    }
+
+
+
+        }
 }

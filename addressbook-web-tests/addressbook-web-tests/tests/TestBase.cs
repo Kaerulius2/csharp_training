@@ -10,7 +10,7 @@ namespace addressbook_web_tests
 {
     public class TestBase
     {
-
+        public static bool PERFORM_LONG_UI_TEST = true;
         protected ApplicationManager app;
 
         [SetUp]
@@ -19,7 +19,7 @@ namespace addressbook_web_tests
             app = ApplicationManager.GetInstance();
             
         }
-
+         
         public void CreateGroupIfNothing()
         {
             app.Navigator.GoToGroupsPage();
