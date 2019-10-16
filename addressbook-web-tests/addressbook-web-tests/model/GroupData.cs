@@ -73,6 +73,8 @@ namespace addressbook_web_tests
 
         }
 
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
 
 
         public bool Equals(GroupData other)

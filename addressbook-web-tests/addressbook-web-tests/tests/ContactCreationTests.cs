@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml.Serialization;
@@ -58,7 +58,8 @@ namespace addressbook_web_tests
 
             Assert.AreEqual(oldCont.Count + 1, app.Contacts.GetContactCount());
 
-            oldCont.Add(contact);
+            ContactData AddedCont = ContactData.GetAll().Except(oldCont).First();
+            oldCont.Add(AddedCont);
             List<ContactData> newCont = ContactData.GetAll();
 
             oldCont.Sort();

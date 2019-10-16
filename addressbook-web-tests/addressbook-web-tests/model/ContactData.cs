@@ -24,6 +24,13 @@ namespace addressbook_web_tests
             Lastname = lastname;
         }
 
+        public ContactData(string id, string firstname, string lastname)
+        {
+            Id = id;
+            Firstname = firstname;
+            Lastname = lastname;
+        }
+
         [Column(Name = "id"),PrimaryKey]
         public string Id { get; set; }
 
@@ -68,6 +75,16 @@ namespace addressbook_web_tests
                 allPhones = value;
             } 
         
+        }
+
+        internal List<GroupData> GetGroups()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Groups
+                        from gcr in db.GCR.Where(p => p.ContactId == Id && p.GroupId == g.Id && g.Deprecated == "0000-00-00 00:00:00")
+                        select g).Distinct().ToList();
+            }
         }
 
         public string CleanUp(string str)
@@ -224,7 +241,7 @@ namespace addressbook_web_tests
                 return true;
             }
 
-            return (Firstname == other.Firstname) && (Lastname == other.Lastname);
+            return (Firstname == other.Firstname) && (Lastname == other.Lastname) && (Id == other.Id);
 
         }
         public override int GetHashCode()
@@ -233,7 +250,7 @@ namespace addressbook_web_tests
         }
         public override string ToString()
         {
-            return "LastName=" + Lastname + "\nFirstName=" + Firstname;
+            return "ID="+Id+ "\nLastName=" + Lastname + "\nFirstName=" + Firstname;
         }
     }
     

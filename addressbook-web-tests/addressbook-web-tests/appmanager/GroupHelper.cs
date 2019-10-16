@@ -28,6 +28,14 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public void CreateNewGroup()
+        {
+            GroupData newGroup = new GroupData("NewTestGroup");
+            newGroup.Header = "NewTestHeader";
+            newGroup.Footer = "NewTestFooter";
+            Create(newGroup);
+        }
+
         public GroupHelper Remove(GroupData group)
         {
             manager.Navigator.GoToGroupsPage();
