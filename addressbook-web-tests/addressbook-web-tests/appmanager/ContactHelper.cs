@@ -29,6 +29,42 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public ContactHelper Delete(ContactData contact)
+        {
+            manager.Navigator.ReturnToHomepage();
+            SelectContact(contact.Id);
+            DeleteContact();
+            CloseAlert();
+            manager.Navigator.ReturnToHomepage();
+            return this;
+        }
+
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.ReturnToHomepage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0); 
+        }
+
+        private void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        private void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");    
+        }
+
         public ContactData GetInformationFromEditForm(int index)
         {
             manager.Navigator.OpenHomePage();
@@ -106,6 +142,15 @@ namespace addressbook_web_tests
             manager.Navigator.ReturnToHomepage();
             return this;
         }
+        public ContactHelper Modify(ContactData oldContact, ContactData contactNew)
+        {
+            manager.Navigator.ReturnToHomepage();
+            InitContactModification(oldContact.Id);
+            FillNewContactForm(contactNew);
+            SubmitContactModify();
+            manager.Navigator.ReturnToHomepage();
+            return this;
+        }
 
         public ContactData FillContactForm(string firstname, string lastname, string midname, string address, string email, string homephone)
         {
@@ -157,6 +202,12 @@ namespace addressbook_web_tests
             return this;
         }
 
+        private ContactHelper InitContactModification(string index)
+        {
+            driver.FindElement(By.XPath("//a[@href='edit.php?id=" + index + "']")).Click();
+            return this;
+        }
+
         private ContactHelper SubmitContactModify()
         {
             driver.FindElement(By.XPath("//input[@value='Update']")).Click();
@@ -181,6 +232,12 @@ namespace addressbook_web_tests
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
             contCache = null;
+            return this;
+        }
+
+        public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.Id(id)).Click();
             return this;
         }
 

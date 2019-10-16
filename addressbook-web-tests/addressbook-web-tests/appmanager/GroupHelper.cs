@@ -69,6 +69,17 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public GroupHelper Modify(GroupData oldGroup, GroupData newGroup)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(oldGroup.Id);
+            InitGroupModification();
+            FillGroupForm(newGroup);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+        }
+
         public GroupData FillGroupData(string name, string header, string footer)
         {
             GroupData group = new GroupData(name);

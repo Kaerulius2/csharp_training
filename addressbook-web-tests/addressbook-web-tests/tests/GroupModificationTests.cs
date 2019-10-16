@@ -22,9 +22,11 @@ namespace addressbook_web_tests
         {
             GroupData newGroup = app.Groups.FillGroupData("TestGroupNew", "TestHeaderNew", "TestFooterNew");
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
-            app.Groups.Modify(0, newGroup);
+            GroupData toBeModified = oldGroups[0];
+
+            app.Groups.Modify(toBeModified, newGroup);
 
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
@@ -32,7 +34,7 @@ namespace addressbook_web_tests
             oldGroups[0].Header = newGroup.Header;
             oldGroups[0].Footer = newGroup.Footer;
 
-            List <GroupData> newGroups = app.Groups.GetGroupList();
+            List <GroupData> newGroups = GroupData.GetAll();
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);

@@ -20,15 +20,17 @@ namespace addressbook_web_tests
         [Test]
         public void TheUserDelertionTest()
         {
-            List<ContactData> oldCont = app.Contacts.GetContactList();
+            List<ContactData> oldCont = ContactData.GetAll();
 
-            app.Contacts.Delete(0);
+            ContactData toBeRemoved = oldCont[0];
+
+            app.Contacts.Delete(toBeRemoved);
 
             Assert.AreEqual(oldCont.Count - 1, app.Contacts.GetContactCount());
 
             oldCont.RemoveAt(0);
 
-            List<ContactData> newCont = app.Contacts.GetContactList();
+            List<ContactData> newCont = ContactData.GetAll();
 
             oldCont.Sort();
             newCont.Sort();

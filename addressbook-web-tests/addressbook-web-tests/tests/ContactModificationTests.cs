@@ -21,11 +21,13 @@ namespace addressbook_web_tests
         public void UserModificationTest()
         {
             ContactData contactNew = app.Contacts.FillContactForm("Boris", "Petroff", "Kirillovitch", "100111 Russia, SPb, Nevskiy str 6-32", "boriss@mail.com", "+79260003344");
-                
 
-            List<ContactData> oldCont = app.Contacts.GetContactList();
 
-            app.Contacts.Modify(0, contactNew);
+            List<ContactData> oldCont = ContactData.GetAll();
+
+            ContactData toBeModified = oldCont[0];
+
+            app.Contacts.Modify(toBeModified, contactNew);
 
             Assert.AreEqual(oldCont.Count, app.Contacts.GetContactCount());
 
@@ -36,7 +38,7 @@ namespace addressbook_web_tests
             oldCont[0].Email = contactNew.Email;
             oldCont[0].Homephone = contactNew.Homephone;
 
-            List <ContactData> newCont = app.Contacts.GetContactList();
+            List<ContactData> newCont = ContactData.GetAll();
 
             oldCont.Sort();
             newCont.Sort();
