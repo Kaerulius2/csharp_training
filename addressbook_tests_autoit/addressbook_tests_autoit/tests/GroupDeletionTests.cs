@@ -14,7 +14,7 @@ namespace addressbook_tests_autoit
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
 
-            if (oldGroups.Count == 1)
+            if (oldGroups.Count <= 1)
             {
                 GroupData newGroup = new GroupData()
                 {
@@ -25,7 +25,7 @@ namespace addressbook_tests_autoit
                 oldGroups.Add(newGroup);
             }
 
-            GroupData groupToDelete = oldGroups[1];
+            GroupData groupToDelete = oldGroups[0];
 
             app.Groups.Delete(groupToDelete);
 
