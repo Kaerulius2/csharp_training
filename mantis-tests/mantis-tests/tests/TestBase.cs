@@ -13,7 +13,7 @@ namespace mantis_tests
         public static bool PERFORM_LONG_UI_TEST = true;
         protected ApplicationManager app;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetupApplicationMAnager()
         {
             app = ApplicationManager.GetInstance();

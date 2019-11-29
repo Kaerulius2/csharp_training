@@ -6,6 +6,7 @@ using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+//using static System.Net.WebRequestMethods;
 
 namespace mantis_tests
 {
@@ -15,6 +16,7 @@ namespace mantis_tests
         protected string baseURL;
 
         public RegistrationHelper Registration { get; set; }
+        public FtpHelper Ftp { get; set; }
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -23,6 +25,7 @@ namespace mantis_tests
             driver = new ChromeDriver();
             baseURL = "http://localhost/";
             Registration = new RegistrationHelper(this);
+            Ftp = new FtpHelper(this);
           
         }
 
@@ -32,7 +35,7 @@ namespace mantis_tests
             {
                 ApplicationManager newInstance = new ApplicationManager();
                 //newInstance.Navigator.OpenHomePage();
-                newInstance.driver.Url = "localhost";
+                newInstance.driver.Url = "http://localhost/mantisbt-1.2.19/login_page.php";
                 app.Value = newInstance;
                 
             }
