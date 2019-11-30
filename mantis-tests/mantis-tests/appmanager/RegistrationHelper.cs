@@ -38,7 +38,7 @@ namespace mantis_tests
 
         private void OpenMainPage()
         {
-            manager.Driver.Url = "http://localhost/mantisbt-1.2.19/login_page.php";
+            manager.Driver.Url = "http://localhost/mantisbt-1.2.17/login_page.php";
         }
     }
 }

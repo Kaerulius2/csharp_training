@@ -17,16 +17,17 @@ namespace mantis_tests
 
         public RegistrationHelper Registration { get; set; }
         public FtpHelper Ftp { get; set; }
+        public AdminHelper Admin { get; set; }
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager()
         {
             driver = new ChromeDriver();
-            baseURL = "http://localhost/";
+            baseURL = "http://localhost/mantisbt-1.2.17";
             Registration = new RegistrationHelper(this);
             Ftp = new FtpHelper(this);
-          
+            Admin = new AdminHelper(this, baseURL);
         }
 
         public static ApplicationManager GetInstance()
@@ -35,7 +36,7 @@ namespace mantis_tests
             {
                 ApplicationManager newInstance = new ApplicationManager();
                 //newInstance.Navigator.OpenHomePage();
-                newInstance.driver.Url = "http://localhost/mantisbt-1.2.19/login_page.php";
+                newInstance.driver.Url = newInstance.baseURL + "/login_page.php";
                 app.Value = newInstance;
                 
             }
