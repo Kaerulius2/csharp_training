@@ -20,6 +20,9 @@ namespace mantis_tests
         public AdminHelper Admin { get; set; }
         public APIHelper API { get;  set; }
 
+        public ManagementMenuHelper Menu { get; set; }
+        public ProjectManagementHelper Project { get; set; }
+
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager()
@@ -30,6 +33,8 @@ namespace mantis_tests
             Ftp = new FtpHelper(this);
             Admin = new AdminHelper(this, baseURL);
             API = new APIHelper(this);
+            Project = new ProjectManagementHelper(this);
+            Menu = new ManagementMenuHelper(this, baseURL);
         }
 
         public static ApplicationManager GetInstance()
