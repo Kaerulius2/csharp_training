@@ -18,28 +18,23 @@ namespace mantis_tests
         {
             //удалим создадим проект, если ни одного нет
             //проверим, что залогинены, если нет - логинимся
-            app.Login.Login(new AccountData() { Name = "administrator", Password = "root" });
-            ProjectData project = new ProjectData("test")
-            {
-                Status = "development",
-                ViewStatus = "public",
-                Description = "Test loooooooooong description!!!",
-                Enabled = "true"
-            };
-            app.Project.CreateProjectIfNothing(project);
+            AccountData acc = new AccountData() { Name = "administrator", Password = "root" };
+            app.Login.Login(acc);
+            //app.Project.CreateProjectIfNothing(project);
+            app.API.CreateProjectIfNothing(acc);
         }
 
         [Test]
         public void DeleteProjectTests()
         {
-
-            List<ProjectData> oldProjects = app.Project.GetProjectsList();
+            AccountData acc = new AccountData() { Name = "administrator", Password = "root" };
+            List<ProjectData> oldProjects = app.API.GetProjectsList(acc);
 
             int index = 0; //удалять будем первый элемент
 
             app.Project.RemoveProject(index+1);
                         
-            List<ProjectData> newProjects = app.Project.GetProjectsList();
+            List<ProjectData> newProjects = app.API.GetProjectsList(acc);
 
             Assert.AreEqual(oldProjects.Count - 1, newProjects.Count);
 

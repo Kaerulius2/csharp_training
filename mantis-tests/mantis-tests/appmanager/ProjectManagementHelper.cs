@@ -20,7 +20,7 @@ namespace mantis_tests
 
         public void RemoveProject(int index)
         {
-
+            manager.Menu.OpenManageProjectPage();
             InitRemoving(index);
             SubmitRemoving();
                         
@@ -28,7 +28,7 @@ namespace mantis_tests
 
         public void DeleteProjectIfExist(ProjectData project)
         {
-            List<ProjectData> list = GetProjectsList();
+            List<ProjectData> list = manager.API.GetProjectsList(new AccountData() { Name = "administrator", Password = "root" });
 
             if (list.Count == 0)
                 return;
@@ -111,9 +111,9 @@ namespace mantis_tests
                 string status = cells[1].Text;
                 string enabled = "";
                 if (cells[2].Text == " ")
-                    enabled = "false";
+                    enabled = "False";
                 else
-                    enabled = "true";
+                    enabled = "True";
                 string viewSt = cells[3].Text;
                 string description = cells[4].Text;
 

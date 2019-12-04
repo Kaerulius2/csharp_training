@@ -24,20 +24,22 @@ namespace mantis_tests
         [Test]
         public void CreateProjectTests()
         {
+            AccountData acc = new AccountData() { Name = "administrator", Password = "root" };
+            //List<ProjectData> oldProjects = app.Project.GetProjectsList();
 
-            List<ProjectData> oldProjects = app.Project.GetProjectsList();
+            List<ProjectData> oldProjects = app.API.GetProjectsList(acc);
 
             ProjectData project = new ProjectData("test")
             {
                 Status = "development",
                 ViewStatus = "public",
                 Description = "Test loooooooooong description!!!",
-                Enabled = "true"
+                Enabled = "True"
             };
-
+            
             app.Project.Create(project);
 
-            List<ProjectData> newProjects = app.Project.GetProjectsList();
+            List<ProjectData> newProjects = app.API.GetProjectsList(acc);
 
             Assert.AreEqual(oldProjects.Count + 1, newProjects.Count);
 
