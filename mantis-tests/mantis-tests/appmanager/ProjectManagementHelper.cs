@@ -13,9 +13,8 @@ namespace mantis_tests
         {
         }
 
-        public void InitProjectAdding(ProjectData project)
+        public void InitProjectAdding()
         {
-            
             driver.FindElement(By.XPath("//input[@value='Create New Project']")).Click();
         }
 
@@ -38,7 +37,17 @@ namespace mantis_tests
 
             if (indexOfExistProject != -1)
             {
-                RemoveProject(indexOfExistProject);
+                RemoveProject(indexOfExistProject+1);
+            }
+        }
+
+  
+
+        public void CreateProjectIfNothing(ProjectData project)
+        {
+            if(GetProjectsList().Count == 0)
+            {
+                Create(project);
             }
         }
 
@@ -50,6 +59,15 @@ namespace mantis_tests
             SelectElement(By.Name("view_state"), project.ViewStatus);
         }
 
+        internal void Create(ProjectData project)
+        {
+            manager.Menu.OpenManageProjectPage();
+            InitProjectAdding();
+            FillProjectAddingForm(project);
+            SubmitProjectCreation();
+
+        }
+
         public void SubmitProjectCreation()
         {
             driver.FindElement(By.XPath("//input[@value='Add Project']")).Click();
@@ -59,8 +77,8 @@ namespace mantis_tests
 
         public void InitRemoving(int index)
         {
-
-            driver.FindElement(By.XPath("//table[@class='width100' and @cellspacing='1']/tbody/tr[@class='row-1' or @class='row-2']["+index+"]")).Click();
+            string xpa = @"//table[@class='width100' and @cellspacing='1']/tbody/tr[@class='row-1' or @class='row-2'][" + index + "]/td/a";
+            driver.FindElement(By.XPath(xpa)).Click();
                                   
         }
 

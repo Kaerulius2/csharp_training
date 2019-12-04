@@ -11,22 +11,14 @@ using OpenQA.Selenium.Support.UI;
 
 namespace mantis_tests
 {
-    public class ProjectCreationTests : TestBase
+    public class ProjectDeletionTests : TestBase
     {
         [SetUp]
-        public void DeleteTestProject()
+        public void CreateTestProject()
         {
-            //Залогинимся и удалим проект, если такой уже есть
+            //удалим создадим проект, если ни одного нет
+            //проверим, что залогинены, если нет - логинимся
             app.Login.Login(new AccountData() { Name = "administrator", Password = "root" });
-            app.Project.DeleteProjectIfExist(new ProjectData("test"));
-        }
-
-        [Test]
-        public void CreateProjectTests()
-        {
-
-            List<ProjectData> oldProjects = app.Project.GetProjectsList();
-
             ProjectData project = new ProjectData("test")
             {
                 Status = "development",
@@ -34,14 +26,24 @@ namespace mantis_tests
                 Description = "Test loooooooooong description!!!",
                 Enabled = "true"
             };
+            app.Project.CreateProjectIfNothing(project);
+        }
 
-            app.Project.Create(project);
+        [Test]
+        public void DeleteProjectTests()
+        {
 
+            List<ProjectData> oldProjects = app.Project.GetProjectsList();
+
+            int index = 0; //удалять будем первый элемент
+
+            app.Project.RemoveProject(index+1);
+                        
             List<ProjectData> newProjects = app.Project.GetProjectsList();
 
-            Assert.AreEqual(oldProjects.Count + 1, newProjects.Count);
+            Assert.AreEqual(oldProjects.Count - 1, newProjects.Count);
 
-            oldProjects.Add(project);
+            oldProjects.RemoveAt(index);
 
             oldProjects.Sort();
             newProjects.Sort();
